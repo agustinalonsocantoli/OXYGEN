@@ -1,0 +1,56 @@
+<div class="content">
+    <div class="convert">
+        <h3>convert</h3>
+
+        <div id="formulario">
+            <div class="selectContainer">
+                <select [(ngModel)]="optionSelect" (change)="getSelect()" (change)="getUnitResult(this.optionSelect, this.optionInput)">
+                    <option selected="true" value="km">km ➞ miles</option>
+                    <option value="miles">miles ➞ km</option>
+                    <option value="feed">feed ➞ metres</option>
+                    <option value="metres">metres ➞ feed</option>
+                    <option value="yard">yard ➞ millimetres</option>
+                    <option value="millimetres">millimetres ➞ yard</option>
+                </select>
+                
+                <svg (click)="reset()" width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.53033 1.53033C3.82322 1.23744 3.82322 0.762563 3.53033 0.46967C3.23744 0.176777 2.76256 0.176777 2.46967 0.46967L0.46967 2.46967C0.176777 2.76256 0.176777 3.23744 0.46967 3.53033L2.46967 5.53033C2.76256 5.82322 3.23744 5.82322 3.53033 5.53033C3.82322 5.23744 3.82322 4.76256 3.53033 4.46967L2.81066 3.75H13C13.4142 3.75 13.75 3.41421 13.75 3C13.75 2.58579 13.4142 2.25 13 2.25H2.81066L3.53033 1.53033Z" fill="white"/>
+                    <path d="M12.4697 8.46967C12.1768 8.76256 12.1768 9.23744 12.4697 9.53033L13.1893 10.25H3C2.58579 10.25 2.25 10.5858 2.25 11C2.25 11.4142 2.58579 11.75 3 11.75H13.1893L12.4697 12.4697C12.1768 12.7626 12.1768 13.2374 12.4697 13.5303C12.7626 13.8232 13.2374 13.8232 13.5303 13.5303L15.5303 11.5303C15.8232 11.2374 15.8232 10.7626 15.5303 10.4697L13.5303 8.46967C13.2374 8.17678 12.7626 8.17678 12.4697 8.46967Z" fill="white"/>
+                </svg>      
+            </div>
+            
+            <div class="inputContainer">
+                <input type="number" value="100" [(ngModel)]="optionInput" (input)="getInput()" (input)="getUnitResult(this.optionSelect, this.optionInput)">
+                <span>{{optionSelect}}</span>
+            </div>
+        </div>
+
+        <div class="resultContainer">
+            <svg (click)="saveConversiones()" class="iconFav" width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.25 5.0298C0.25 2.3293 2.61914 0.25 5.4 0.25C6.83347 0.25 8.09484 0.922139 9 1.79183C9.90516 0.922139 11.1665 0.25 12.6 0.25C15.3809 0.25 17.75 2.3293 17.75 5.0298C17.75 6.87967 16.9611 8.50644 15.8682 9.88154C14.7771 11.2543 13.35 12.4193 11.9835 13.366C11.4615 13.7276 10.9335 14.0611 10.4503 14.3072C9.99651 14.5383 9.47474 14.75 9 14.75C8.52526 14.75 8.00349 14.5383 7.54973 14.3072C7.06648 14.0611 6.53846 13.7276 6.01653 13.366C4.65005 12.4193 3.22287 11.2543 2.13182 9.88154C1.03888 8.50644 0.25 6.87967 0.25 5.0298ZM5.4 1.75C3.32075 1.75 1.75 3.2791 1.75 5.0298C1.75 6.43329 2.34579 7.74 3.30609 8.94822C4.26828 10.1588 5.56292 11.2269 6.87074 12.133C7.36562 12.4758 7.83174 12.7675 8.23045 12.9706C8.65865 13.1886 8.90666 13.25 9 13.25C9.09334 13.25 9.34135 13.1886 9.76955 12.9706C10.1683 12.7675 10.6344 12.4758 11.1293 12.133C12.4371 11.2269 13.7317 10.1588 14.6939 8.94822C15.6542 7.74 16.25 6.43329 16.25 5.0298C16.25 3.2791 14.6792 1.75 12.6 1.75C11.4058 1.75 10.2908 2.46342 9.59457 3.36892C9.4526 3.55356 9.23291 3.66176 9 3.66176C8.76709 3.66176 8.5474 3.55356 8.40544 3.36892C7.7092 2.46342 6.59415 1.75 5.4 1.75Z" fill="white"/>
+            </svg>
+
+            <div class="result">
+                <p>{{unitResult}}</p>
+                <span>{{typeResult}}</span>
+            </div>
+        </div>
+            
+    </div>
+
+    <div class="saved">
+        <h3>saved</h3>
+        <div class="listContainer">
+            
+            <p *ngFor="let conversion of conversiones">
+                {{conversion.input_unit}} {{conversion.input_type}} ➞ {{conversion.output_unit}} {{conversion.output_type}}
+                <span (click)="deleteConversion(conversion._id)">
+                    <svg class="iconoDelete" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.06588 1.9948C9.35877 1.70191 9.35877 1.22703 9.06588 0.93414C8.77298 0.641247 8.29811 0.641247 8.00522 0.93414L5.00002 3.93934L1.99482 0.93414C1.70192 0.641247 1.22705 0.641247 0.934157 0.93414C0.641264 1.22703 0.641264 1.70191 0.934157 1.9948L3.93936 5L0.934147 8.00521C0.641254 8.2981 0.641254 8.77297 0.934147 9.06587C1.22704 9.35876 1.70191 9.35876 1.99481 9.06587L5.00002 6.06066L8.00522 9.06587C8.29812 9.35876 8.77299 9.35876 9.06588 9.06587C9.35878 8.77298 9.35878 8.2981 9.06588 8.00521L6.06068 5L9.06588 1.9948Z" fill="#676767"/>
+                    </svg>
+                        
+                </span>
+            </p>        
+        </div>
+    </div>
+</div>
